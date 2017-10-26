@@ -28,7 +28,6 @@ Player.prototype.show = function() {
   rect(this.life.x, this.life.y, this.life.w, this.life.h);
   fill(255)
   rect(this.life.x, this.life.y, this.life.stat, this.life.h);
-  console.log(this.life.stat);
   push();
     fill(255);
     rectMode(CENTER);
@@ -70,6 +69,10 @@ Player.prototype.update = function() {
     } else {
       return 0;
     }
+  }
+
+  if (this.life.stat == 200) {
+    return -2;
   }
 }
 

@@ -17,6 +17,16 @@ function setup() {
 	builds[1].x = 150;
 }
 
+function restart() {
+	player = new Player();
+	for (var i = 0; i < 10; i++) {
+		drops[i] = new Rain();
+	}
+	builds.push(new Building(moving));
+	builds.push(new Building(moving));
+	builds[1].x = 150;
+}
+
 function draw() {
 	var rand = random(5, 20);
 	background(51);
@@ -58,6 +68,9 @@ function draw() {
 	}
 
 	moving = player.update();
+	if (moving == -2) {
+		restart();
+	}
 	for (var i = drops.length - 1; i >= 0; i--) {
 		var check = player.eval(drops[i]);
 		if (check) {
@@ -65,6 +78,8 @@ function draw() {
 		}
 	}
 	player.show();
+
+
 }
 
 function centerCanvas() {
