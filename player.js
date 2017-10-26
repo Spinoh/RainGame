@@ -56,22 +56,18 @@ Player.prototype.update = function() {
     }
   }
   this.x = constrain(this.x, 80, 350);
-  if (this.x >= 85 && this.x < 346) {
+  if (this.x > 80 && this.x < 350) {
     this.x += this.xspeed;
     return 0;
-  } else if (this.x < 85) {
-    this.x = 85;
-    this.xspeed = 0;
-    return -1;
-  } else {
-    if (this.mov) {
-      return (this.speed < 0) ? -1 : 1;
-    } else {
-      return 0;
-    }
+  } else if (this.x == 80) {
+    this.x += this.xspeed;
+    return (this.mov) ? -1 : 0;
+  } else if (this. x  == 350) {
+    this.x += this.xspeed;
+    return (this.mov) ? 1 : 0;
   }
 
-  if (this.life.stat == 200) {
+  if (this.life.stat >= 190) {
     return -2;
   }
 }
@@ -80,14 +76,14 @@ Player.prototype.move = function(dir) {
     switch (dir) {
       case -1:
         if (keyIsPressed) {
-          this.xspeed = -2;
+          this.xspeed = -3;
           this.mov = true;
           return (this.x > 90) ? 0 : -1;
         }
         break;
       case 1:
         if (keyIsPressed) {
-          this.xspeed = 2;
+          this.xspeed = 3;
           this.mov = true;
           return (this.x < 340) ? 0 : 1;
         }
@@ -100,7 +96,8 @@ Player.prototype.move = function(dir) {
 }
 
 Player.prototype.eval = function (drop) {
-  if (drop.pos.x > this.x - 15 && drop.pos.x < this.x + 15 && drop.pos.y > height - 160) {
+  if (drop.pos.x > this.x - 15 && drop.pos.x < this.x + 15 && drop.pos.y > this.y - 80) {
+    this.life.stat = constrain(this.life.stat, 0, 200);
     this.life.stat += 20;
     return true;
   } else {

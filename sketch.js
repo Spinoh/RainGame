@@ -19,6 +19,8 @@ function setup() {
 
 function restart() {
 	player = new Player();
+	drops = [];
+	builds = [];
 	for (var i = 0; i < 10; i++) {
 		drops[i] = new Rain();
 	}
@@ -63,19 +65,22 @@ function draw() {
 	}
 	var dist = [200, 250, 300, 350, 400];
 
-	if ( builds.length < 2) {
+	if ( builds.length == 1 && width - builds[0].x > random(300, 1000) ) {
+		builds.push(new Building(moving));
+	} else if (builds.length < 2){
 		builds.push(new Building(moving));
 	}
 
-	moving = player.update();
-	if (moving == -2) {
-		restart();
-	}
+
 	for (var i = drops.length - 1; i >= 0; i--) {
 		var check = player.eval(drops[i]);
 		if (check) {
 			drops.splice(i, 1);
 		}
+	}
+	moving = player.update();
+	if (moving == -2) {
+		restart();
 	}
 	player.show();
 

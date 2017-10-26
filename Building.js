@@ -46,14 +46,14 @@ Building.prototype.offscreen = function() {
 Building.prototype.move = function(px, dir) {
   switch (dir) {
     case -1:
-      if (px > 90) {
+      if (px > 80) {
         this.speed = 0;
       } else {
         this.speed = -3;
       }
       break;
     case 1:
-      if (px < 340) {
+      if (px < 350) {
         this.speed = 0;
       } else {
         this.speed = 3;
