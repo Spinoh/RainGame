@@ -2,6 +2,7 @@
 function Rain() {
   this.pos = createVector(random(-500, 1300), random(0, 20));
   this.vel = createVector(0 , 3);
+  this.hit = false;
 }
 
 Rain.prototype.update = function(moving) {
@@ -16,19 +17,27 @@ Rain.prototype.update = function(moving) {
 }
 
 Rain.prototype.show = function() {
-  push();
-  fill(256, 240, 230, 125);
-  translate(this.pos.x, this.pos.y);
-  rotate(this.vel.heading());
-  rectMode(CENTER);
-  rect(0, 0, 30, 5);
-  pop();
+  if (!this.hit) {
+    push();
+    fill(256, 240, 230, 125);
+    translate(this.pos.x, this.pos.y);
+    rotate(this.vel.heading());
+    rectMode(CENTER);
+    rect(0, 0, 30, 5);
+    pop();
+  }
 }
 
 Rain.prototype.offscreen = function() {
-  if(this.pos.y > height || this.pos.x < 0 || this.pos.x > width) {
+  if(this.pos.y > height || this.pos.x < -100 || this.pos.x > width + 200 || this.hit) {
     return true;
   } else {
     return false;
+  }
+}
+
+Rain.prototype.eval = function(build) {
+  if (this.pos.x > build.x - 150 && this.pos.x < build.x + 150 && this.pos.y >= height - build.h ) {
+    this.hit = true;
   }
 }

@@ -39,11 +39,17 @@ function draw() {
 
 	for (var i = drops.length - 1; i >= 0; i--) {
 		drops[i].update(moving);
+		for (var j = 0 ; j < builds.length; j++) {
+			drops[i].eval(builds[j]);
+		}
+
 		drops[i].show();
 
 		if (drops[i].offscreen()) {
 			drops.splice(i, 1);
 		}
+
+
 	}
 	var dist = [200, 250, 300, 350, 400];
 
@@ -52,6 +58,12 @@ function draw() {
 	}
 
 	moving = player.update();
+	for (var i = drops.length - 1; i >= 0; i--) {
+		var check = player.eval(drops[i]);
+		if (check) {
+			drops.splice(i, 1);
+		}
+	}
 	player.show();
 }
 
